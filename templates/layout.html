@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Post</title>
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-theme.min.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+    <script src="{{url_for('static', filename='js/jquery-2.2.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                    {% if user.is_authenticated %}
+                <li role="presentation" class="active">
+                    <a href="/#" class="not-link">{{ user.username }}</a>
+                <li role="presentation"><a href="/mailbox">Mailbox</a>
+                <li role="presentation"><a href="/logout">Log Out</a>
+                    {% else %}
+                <li role="presentation" class="active"><a href="/login">Sign In</a>
+                <li role="presentation"><a href="/join">Sign Up</a>
+                    {% endif %}
+            </ul>
+        </nav>
+        <h3 class="text-muted"><a href="/" class="title-link">Post</a></h3>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <p>Vladislav Gerasimov 2016</p>
+    </footer>
+
+</div>
+</body>
+
+</html>

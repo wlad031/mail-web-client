@@ -1,0 +1,23 @@
+{% extends "mailbox.html" %}
+
+{% block mail_content %}
+
+<div class="row">
+
+    <h3>{{ mail.subject }}</h3>
+    <h5>From: {{ mail.sender_name }}</h5>
+    <h6>{{ mail.timestamp }}</h6>
+
+    <p>{{ mail.text }}</p>
+
+    <div class="col-sm-11"></div>
+    <div class="col-sm-1">
+        <a href="/delete/{{ section }}/{{ mail.id }}" class="thumbnail">
+            <img src="{{ url_for('static', filename='img/delete.svg') }}" alt="Delete" width="20px"
+                 height="20px"/>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

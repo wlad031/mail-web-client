@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-2">
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="{% if section == 'new' %} active {% endif %}"><a href="/mail_form/new">Write</a></li>
+                    <li class="{% if section == 'inbox' %} active {% endif %}"><a href="/mailbox/inbox">Inbox
+                        {% if new_mails_count > 0 %}
+                        ({{ new_mails_count }})
+                        {% endif %}
+                    </a></li>
+                    <li class="{% if section == 'sent' %} active {% endif %}"><a href="/mailbox/sent">Sent</a></li>
+                    <li class="{% if section == 'draft' %} active {% endif %}"><a href="/mailbox/draft">Draft
+                        {% if draft_mails_count > 0 %}
+                        ({{ draft_mails_count }})
+                        {% endif %}
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+
+    <div class="col-sm-10">
+        <p class="lead"></p>
+        {% include "flashes.html" %}
+
+        {% block mail_content %}{% endblock %}
+    </div>
+
+</div>
+
+{% endblock %}

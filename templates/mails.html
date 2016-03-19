@@ -1,0 +1,41 @@
+{% extends "mailbox.html" %}
+
+{% block mail_content %}
+
+<ul class="list-group">
+    {% for mail in data %}
+    <a href="/mail/{{ section }}/{{ mail.id }}" class="list-group-item
+    {% if not mail.is_viewed and section != 'draft' %}
+    list-group-item-info
+    {% endif %}
+    ">
+        <div class="row">
+            <div class="col-sm-3">
+                {% if section == 'inbox' %}
+                <h6><b>From:</b></h6>
+                <h5>{{ mail.sender_name }}</h5>
+                {% else %}
+                <h6><b>To:</b></h6>
+                <h5>{{ mail.recipient_name }}</h5>
+                {% endif %}
+            </div>
+
+            <div class="col-sm-6">
+                <h6><b>Subject:</b></h6>
+                <h5>{{ mail.subject }}</h5>
+            </div>
+
+            <div class="col-sm-3">
+                <h6 style="position: relative; right: 0;">{{ mail.timestamp }}</h6>
+            </div>
+
+        </div>
+    </a>
+    {% endfor %}
+</ul>
+
+<div class="text-center">
+    {{ pagination.links }}
+</div>
+
+{% endblock %}
