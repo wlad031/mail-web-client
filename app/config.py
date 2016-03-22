@@ -1,7 +1,7 @@
 import os
 
 AppConfig = {
-    'DEBUG_MODE': False,
+    'DEBUG_MODE': True,
     'HOST': os.environ.get('HOST', '0.0.0.0'),
     'PORT': int(os.environ.get('PORT', 5001)),
     'FORM_SECRET_KEY': os.urandom(16),

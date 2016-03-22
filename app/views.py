@@ -131,12 +131,6 @@ def get_mail(mail_id, section):
                                           'status': None,
                                           'is_viewed': True}))
 
-            return _render_template('mail.html',
-                                    section=section,
-                                    mail=format_mail(mail),
-                                    new_mails_count=new_mails_count(),
-                                    draft_mails_count=draft_mails_count())
-
         # Fill form fields
         if section == 'draft':
             form = MailForm()
@@ -150,6 +144,12 @@ def get_mail(mail_id, section):
                                     updated_id=mail_id,
                                     new_mails_count=new_mails_count(),
                                     draft_mails_count=draft_mails_count())
+
+        return _render_template('mail.html',
+                                section=section,
+                                mail=format_mail(mail),
+                                new_mails_count=new_mails_count(),
+                                draft_mails_count=draft_mails_count())
 
     else:
         return _render_template('error_page.html', status_code=r.status_code)
