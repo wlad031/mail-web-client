@@ -12,5 +12,6 @@ AppConfig = {
 
 ServerConfig = {
     'API_URL': os.environ.get('API_URL', 'http://127.0.0.1:5000/api'),
-    'HEADERS': {'Content-Type': 'application/json'}
+    'HEADERS': {'Content-Type': 'application/json',
+                'Accept-Charset': 'utf-8'}
 }

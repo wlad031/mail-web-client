@@ -254,7 +254,6 @@ def mail_form(mail_id=0):
 
 
 def get_all_my_mails():
-    print session
     r = requests.get(api_url + '/mail',
                      headers=headers,
                      auth=(session['user']['token'], 'unused'))
