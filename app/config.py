@@ -1,6 +1,7 @@
 import os
 
 AppConfig = {
+    'MAIL_DOMAIN': 'csit.edu',
     'DEBUG_MODE': True,
     'HOST': os.environ.get('HOST', '0.0.0.0'),
     'PORT': int(os.environ.get('PORT', 5001)),

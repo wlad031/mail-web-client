@@ -44,7 +44,7 @@ def login():
 
         r = requests.get(api_url + '/token',
                          headers=headers,
-                         auth=(form.username.data, form.password.data))
+                         auth=(form.username.data + '@' + cfg.AppConfig['MAIL_DOMAIN'], form.password.data))
 
         # Successfully authorization
         if r.status_code == 200:
@@ -84,13 +84,14 @@ def register():
 
         r = requests.put(api_url + '/user',
                          headers=headers,
-                         data=json.dumps({'username': form.username.data, 'password': form.password.data}))
+                         data=json.dumps({'username': form.username.data,
+                                          'password': form.password.data}))
 
         # Successfully registration
         if r.status_code == 201:
             r = requests.get(api_url + '/token',
                              headers=headers,
-                             auth=(form.username.data, form.password.data))
+                             auth=(form.username.data + '@' + cfg.AppConfig['MAIL_DOMAIN'], form.password.data))
             data = json.loads(r.text)
             session['user'] = User(id=data['id'], username=data['username'], token=data['token']).__dict__
             return redirect(url_for('get_all_mails'))
@@ -134,7 +135,7 @@ def get_mail(mail_id, section):
         # Fill form fields
         if section == 'draft':
             form = MailForm()
-            form.recipient.data = get_username(mail['recipient_id'])
+            form.recipient.data = mail['recipient']
             form.subject.data = mail['subject']
             form.text.data = mail['text']
 
@@ -260,6 +261,7 @@ def get_all_my_mails():
 
     if r.status_code == 200:
         return json.loads(r.text)['mails']
+
     return None
 
 
@@ -270,8 +272,9 @@ def get_my_mails(section):
     mails = get_all_my_mails()
 
     if section == 'inbox':
+        print session['user']['username']
         return list([mail for mail in mails
-                     if mail['status'] == 'sent' and mail['recipient_id'] == session['user']['id']])
+                     if mail['status'] == 'sent' and mail['recipient'] == session['user']['username']])
     if section == 'draft':
         return list([mail for mail in mails
                      if mail['status'] == 'draft' and mail['sender_id'] == session['user']['id']])
@@ -298,12 +301,11 @@ def format_mails(mails):
 
 
 def format_mail(mail):
-    recipient_name = get_username(mail['recipient_id'])
     sender_name = get_username(mail['sender_id'])
     timestamp = helper.format_timestamp(mail['timestamp'])
 
     return {'id': mail['id'],
-            'recipient_name': recipient_name,
+            'recipient_name': mail['recipient'],
             'sender_name': sender_name,
             'subject': mail['subject'],
             'text': mail['text'],
