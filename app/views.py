@@ -272,7 +272,6 @@ def get_my_mails(section):
     mails = get_all_my_mails()
 
     if section == 'inbox':
-        print session['user']['username']
         return list([mail for mail in mails
                      if mail['status'] == 'sent' and mail['recipient'] == session['user']['username']])
     if section == 'draft':
@@ -286,7 +285,7 @@ def get_my_mails(section):
 
 def new_mails_count():
     k = 0
-    for mail in get_my_mails('inbox'):
+    for mail in get_my_mails(section='inbox'):
         if not mail['is_viewed']:
             k += 1
     return k
