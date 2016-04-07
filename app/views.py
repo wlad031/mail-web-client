@@ -236,7 +236,7 @@ def mail_form(mail_id=0):
                                                'status': mail_status}))
         if r1.status_code == 400:
             flash(json.loads(r1.text)['error'], 'danger')
-        elif r1.status_code == 201:
+        elif r1.status_code == 201 or r1.status_code == 200:
             if request.form['submit'] == 'send':
                 flash('Mail was successfully sent', 'success')
             if request.form['submit'] == 'save':
